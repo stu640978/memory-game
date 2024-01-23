@@ -44,17 +44,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 
 const dialogVisible = ref(false);
 const dialogWidth = ref("45%");
 
 onMounted(() => {
+  window.addEventListener("resize", GetLatestWidthAndResizeDialog);
   GetLatestWidthAndResizeDialog();
 });
 
-window.addEventListener("resize", () => {
-  GetLatestWidthAndResizeDialog();
+onUnmounted(() => {
+  window.removeEventListener("resize", GetLatestWidthAndResizeDialog);
 });
 
 const ClickHelp = () => {
