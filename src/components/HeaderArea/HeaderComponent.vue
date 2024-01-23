@@ -20,7 +20,7 @@
       </span>
       <span class="tips_text"> 遊戲規則：<br /> </span>
       <span class="tips_text">
-        1. 遊戲開始時，會隨機產生 9 張卡片，每張卡片都有一個對應的配對卡片
+        1. 遊戲開始時，會隨機產生 16 張卡片，每張卡片都有一個對應的配對卡片
         <br />
       </span>
       <span class="tips_text">
@@ -104,6 +104,10 @@ const GetLatestWidthAndResizeDialog = () => {
       background-color: rgb(216, 0, 216);
       line-height: 32px;
       cursor: pointer;
+
+      &:hover {
+        scale: 1.1;
+      }
     }
   }
 }

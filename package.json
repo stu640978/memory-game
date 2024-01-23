@@ -40,7 +40,7 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "eslint:recommended",
+      "eslint:recommended",  "plugin:prettier/recommended",
       "@vue/typescript/recommended",
       "plugin:prettier/recommended"
     ],
