@@ -9,7 +9,7 @@
   <el-dialog
     v-model="dialogVisible"
     title="Tips"
-    width="45%"
+    :width="dialogWidth"
     class="tips_dialog"
     :before-close="handleClose"
   >
@@ -44,9 +44,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const dialogVisible = ref(false);
+const dialogWidth = ref("45%");
+
+onMounted(() => {
+  GetLatestWidthAndResizeDialog();
+});
+
+window.addEventListener("resize", () => {
+  GetLatestWidthAndResizeDialog();
+});
 
 const ClickHelp = () => {
   dialogVisible.value = true;
@@ -54,6 +63,16 @@ const ClickHelp = () => {
 
 const handleClose = () => {
   dialogVisible.value = false;
+};
+
+const GetLatestWidthAndResizeDialog = () => {
+  //get window width
+  const windowWidth = window.innerWidth;
+  if (windowWidth < 1024) {
+    dialogWidth.value = "90%";
+  } else {
+    dialogWidth.value = "45%";
+  }
 };
 </script>
 
