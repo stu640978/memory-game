@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Noto+Serif+TC&display=swap');
+
+$default_font_color: #fff;
+$default_font_size: 14px;
+$default_font_weight: 400;
+$default_font_family: 'Noto Sans TC',
+微軟正黑體,
+儷黑 Pro,
+文泉驛正黑,
+'Noto Serif';
+$primary_background_color: #333;
+
+// 隱藏scrollbar
+%hide_scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+
+// 設置Flex及置中
+%flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin font_set($color: $default_font_color,
+  $font_size: $default_font_size,
+  $font_weight: $default_font_weight,
+  $font_family: $default_font_family) {
+  color: $color;
+  font-size: $font_size;
+  font-weight: $font_weight;
+  font-family: $font_family;
+}
