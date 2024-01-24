@@ -13,7 +13,8 @@
           v-for="(item, index) in outputCardData"
           :key="index"
           v-bind="item"
-          v-model:id="emitData"
+          :ignoreClick="ignoreClick"
+          @flip="GetFlipData"
         />
       </div>
     </div>
@@ -21,14 +22,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
 import CardComponent from "@/components/GameArea/CardComponent.vue";
 
 const coverActive = ref(true);
 
-const emitData = ref(0);
-
 const cardData = reactive([
+  {
+    id: 0,
+    number: 1,
+    color: "red",
+    isFlipped: false,
+    isMatched: false,
+  },
   {
     id: 1,
     number: 1,
@@ -38,8 +44,8 @@ const cardData = reactive([
   },
   {
     id: 2,
-    number: 1,
-    color: "red",
+    number: 2,
+    color: "orange",
     isFlipped: false,
     isMatched: false,
   },
@@ -52,8 +58,8 @@ const cardData = reactive([
   },
   {
     id: 4,
-    number: 2,
-    color: "orange",
+    number: 3,
+    color: "yellow",
     isFlipped: false,
     isMatched: false,
   },
@@ -66,8 +72,8 @@ const cardData = reactive([
   },
   {
     id: 6,
-    number: 3,
-    color: "yellow",
+    number: 4,
+    color: "green",
     isFlipped: false,
     isMatched: false,
   },
@@ -80,8 +86,8 @@ const cardData = reactive([
   },
   {
     id: 8,
-    number: 4,
-    color: "green",
+    number: 5,
+    color: "blue",
     isFlipped: false,
     isMatched: false,
   },
@@ -94,8 +100,8 @@ const cardData = reactive([
   },
   {
     id: 10,
-    number: 5,
-    color: "blue",
+    number: 6,
+    color: "purple",
     isFlipped: false,
     isMatched: false,
   },
@@ -108,8 +114,8 @@ const cardData = reactive([
   },
   {
     id: 12,
-    number: 6,
-    color: "purple",
+    number: 7,
+    color: "pink",
     isFlipped: false,
     isMatched: false,
   },
@@ -122,8 +128,8 @@ const cardData = reactive([
   },
   {
     id: 14,
-    number: 7,
-    color: "pink",
+    number: 8,
+    color: "gray",
     isFlipped: false,
     isMatched: false,
   },
@@ -134,19 +140,47 @@ const cardData = reactive([
     isFlipped: false,
     isMatched: false,
   },
-  {
-    id: 16,
-    number: 8,
-    color: "gray",
-    isFlipped: false,
-    isMatched: false,
-  },
 ]);
+
+interface flipedData {
+  id: number;
+  number: number;
+}
+
+const flipedData: flipedData[] = reactive([]);
 
 const outputCardData = reactive([...cardData]);
 
+const ignoreClick = ref(false);
+
+watch(flipedData, (newVal) => {
+  if (newVal.length === 2) {
+    ignoreClick.value = true;
+    setTimeout(() => {
+      if (newVal[0].number !== newVal[1].number) {
+        outputCardData.forEach((element) => {
+          if (element.id === newVal[0].id || element.id === newVal[1].id) {
+            element.isFlipped = false;
+          }
+        });
+      } else {
+        outputCardData.forEach((element) => {
+          if (element.id === newVal[0].id || element.id === newVal[1].id) {
+            element.isMatched = true;
+          }
+        });
+      }
+
+      flipedData.splice(0);
+    }, 1000);
+
+    setTimeout(() => {
+      ignoreClick.value = false;
+    }, 1100);
+  }
+});
+
 const GenerateNewData = () => {
-  // let newArray = reactive([...cardData]);
   let newArray = Shuffle(outputCardData);
 
   outputCardData.splice(0, outputCardData.length, ...newArray);
@@ -164,18 +198,28 @@ const Shuffle = (array: typeof cardData) => {
 };
 
 const ResetGame = () => {
-  // let newArray = reactive([...cardData]);
   outputCardData.forEach((element) => {
     element.isFlipped = false;
     element.isMatched = false;
   });
-  // outputCardData.splice(0, outputCardData.length, ...newArray);
   coverActive.value = true;
 };
 
 const StartGame = () => {
   GenerateNewData();
   coverActive.value = false;
+};
+
+const GetFlipData = (id: number) => {
+  outputCardData.forEach((element) => {
+    if (element.id === id) {
+      element.isFlipped = true;
+      flipedData.push({
+        id: element.id,
+        number: element.number,
+      });
+    }
+  });
 };
 </script>
 

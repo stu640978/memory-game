@@ -1,15 +1,15 @@
 <template>
-  <div
-    class="card_container"
-    :class="[isFlipped === true ? 'flip' : null]"
-    @click="FlipCard"
-  >
-    <div class="card" :style="{ backgroundColor: color }">
+  <div class="card_container" @click="FlipCard">
+    <div class="card__back" :class="[isFlipped === true ? 'flip' : null]"></div>
+    <div
+      class="card"
+      :class="[isFlipped === true ? 'flip' : null]"
+      :style="{ backgroundColor: color }"
+    >
       <div class="card__box">
         <span class="card__box__span">{{ number }}</span>
       </div>
     </div>
-    <div class="card__back"></div>
   </div>
 </template>
 
@@ -37,13 +37,16 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+  ignoreClick: {
+    type: Boolean,
+    required: true,
+  },
 });
 
-const emits = defineEmits<{
-  flip: [id: number];
-}>();
+const emits = defineEmits(["flip"]);
 
 const FlipCard = () => {
+  if (props.ignoreClick || props.isFlipped) return;
   emits("flip", props.id);
 };
 </script>
@@ -56,19 +59,40 @@ const FlipCard = () => {
   width: 100px;
   margin: 10px;
 
+  &:hover {
+    .card__back {
+      transform: scale(1.1);
+      transition: transform 0.3s ease-in-out;
+    }
+  }
+
   .card,
   .card__back {
     position: absolute;
     position: absolute;
     width: 100%;
     height: 100%;
-    backface-visibility: hidden;
-    transition: transform 0.25s ease-in-out;
+    transition: all 0.6s ease-in-out;
   }
   .card {
     @extend %flex_center;
     border-radius: 5px;
     transform: rotateY(-180deg);
+    backface-visibility: hidden;
+
+    &.flip {
+      animation: faceTurn 0.6s forwards;
+      perspective: 1000px;
+      @keyframes faceTurn {
+        0% {
+          transform: rotateY(-180deg);
+        }
+
+        100% {
+          transform: rotateY(0deg);
+        }
+      }
+    }
 
     .card__box {
       background-color: #3b3b3bd4;
@@ -85,12 +109,33 @@ const FlipCard = () => {
   }
 
   .card__back {
-    background-color: #3b3b3bd4;
+    background-color: #202020;
     border-radius: 5px;
+    cursor: pointer;
     transform: rotateY(0deg);
+    backface-visibility: hidden;
+
+    &.flip {
+      animation: backTurn 0.6s forwards;
+      perspective: 1000px;
+      @keyframes backTurn {
+        0% {
+          transform: rotateY(0deg);
+        }
+
+        100% {
+          transform: rotateY(180deg);
+        }
+      }
+    }
   }
 }
-.flip .card__back {
-  transform: rotateY(180deg);
+
+@media screen and (max-width: 1024px) {
+  .card_container {
+    height: 105px;
+    width: 80px;
+    margin: 5px;
+  }
 }
 </style>
