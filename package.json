@@ -11,6 +11,8 @@
     "core-js": "^3.8.3",
     "element-plus": "^2.5.3",
     "register-service-worker": "^1.7.2",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3"
   },
@@ -40,7 +42,8 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "eslint:recommended",  "plugin:prettier/recommended",
+      "eslint:recommended",
+      "plugin:prettier/recommended",
       "@vue/typescript/recommended",
       "plugin:prettier/recommended"
     ],

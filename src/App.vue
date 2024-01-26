@@ -27,7 +27,9 @@ nav {
 }
 
 .el-dialog {
-  background-color: rgba(51, 41, 65, 0.8) !important;
+  background-color: rgba(51, 41, 65, 0.9) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(15px);
   .el-dialog__title {
     color: #dcdcdc;
   }

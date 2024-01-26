@@ -389,6 +389,7 @@ const handleClose = () => {
         background-color: rgba(51, 41, 65, 0.8);
         visibility: hidden;
         border-radius: 10px;
+        backdrop-filter: blur(10px);
         .text {
           width: 120px;
           height: 40px;
@@ -397,6 +398,7 @@ const handleClose = () => {
           @include font_set(#202020, 24px, 600);
           line-height: 40px;
           cursor: pointer;
+          transition: all 0.1s;
 
           &:hover {
             scale: 1.1;
