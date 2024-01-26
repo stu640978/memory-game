@@ -7,7 +7,7 @@
         class="link"
         target="_blank"
       >
-        Repo link
+        <span class="link__text"> Repo link </span>
       </a>
     </div>
   </div>
@@ -20,6 +20,7 @@
   height: 100px;
   width: 100%;
   position: fixed;
+  z-index: 50;
   bottom: 0;
   left: 0;
   @extend %flex_center;
@@ -34,9 +35,37 @@
       margin-bottom: 20px;
     }
     .link {
-      @include font_set(#d4d4d4, 16px, 600);
-      &:hover {
-        text-decoration: underline;
+      @extend %flex_center;
+      height: 22px;
+      .link__text {
+        @include font_set(#d4d4d4, 16px, 600);
+        line-height: 22px;
+        position: relative;
+        &:hover {
+          text-decoration: underline;
+        }
+
+        &::before {
+          content: "";
+          width: 118%;
+          height: 70%;
+          position: absolute;
+          left: -8%;
+          top: 38%;
+          background: rgba(0, 196, 179, 0.3);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .footer {
+    height: 80px;
+    .developer_info {
+      margin-top: 5px;
+      .developer {
+        margin-bottom: 10px;
       }
     }
   }

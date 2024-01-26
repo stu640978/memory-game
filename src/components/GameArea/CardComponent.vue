@@ -126,6 +126,22 @@ const FlipCard = () => {
   .card_container {
     height: 105px;
     width: 80px;
+    margin: 10px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .card_container {
+    height: 105px;
+    width: 80px;
+    margin: 5px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .card_container {
+    height: 90px;
+    width: 70px;
     margin: 5px;
   }
 }

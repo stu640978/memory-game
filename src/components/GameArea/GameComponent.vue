@@ -11,20 +11,40 @@
         <div class="cover" :class="{ active: coverActive }">
           <span class="text" @click="StartGame">開始遊戲</span>
         </div>
-        <CardComponent
-          v-for="(item, index) in outputCardData"
-          :key="index"
-          v-bind="item"
-          :ignoreClick="ignoreClick"
-          @flip="GetFlipData"
-        />
+        <div class="cardwrapper">
+          <CardComponent
+            v-for="(item, index) in outputCardData"
+            :key="index"
+            v-bind="item"
+            :ignoreClick="ignoreClick"
+            @flip="GetFlipData"
+          />
+        </div>
       </div>
     </div>
   </div>
+  <el-dialog
+    v-model="dialogVisible"
+    title="遊戲結束!"
+    :width="dialogWidth"
+    class="tips_dialog"
+    :before-close="handleClose"
+  >
+    <div class="content">
+      <div class="textbox">
+        <span class="gameover_text" v-html="gameoverText"></span>
+      </div>
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="ResetGame"> 再玩一次 </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch, onUnmounted } from "vue";
+import { ref, reactive, watch, onMounted, onUnmounted, computed } from "vue";
 import CardComponent from "@/components/GameArea/CardComponent.vue";
 
 const coverActive = ref(true);
@@ -144,6 +164,10 @@ const cardData = reactive([
   },
 ]);
 
+const dialogVisible = ref(false);
+
+const dialogWidth = ref("45%");
+
 interface flipedDataInterface {
   id: number;
   number: number;
@@ -194,9 +218,43 @@ watch(flipedData, (newVal) => {
   }
 });
 
+const gameoverText = computed(() => {
+  let returnText = "";
+  switch (true) {
+    case timerText.value <= 30:
+      returnText = `你是鬼吧! 只花了&nbsp;<span class="time_text">${timerText.value}</span>&nbsp;秒就完成了遊戲`;
+      break;
+
+    case timerText.value <= 60:
+      returnText = `恭喜你! 共花了&nbsp;<span class="time_text">${timerText.value}</span>&nbsp;秒完成了遊戲`;
+      break;
+
+    case timerText.value > 60:
+      returnText = `你累了嗎? 花了&nbsp;<span class="time_text">${timerText.value}</span>&nbsp;秒才完成遊戲`;
+      break;
+  }
+
+  return returnText;
+});
+
+onMounted(() => {
+  window.addEventListener("resize", GetLatestWidthAndResizeDialog);
+  GetLatestWidthAndResizeDialog();
+});
+
 onUnmounted(() => {
   StopTimer();
 });
+
+const GetLatestWidthAndResizeDialog = () => {
+  //get window width
+  const windowWidth = window.innerWidth;
+  if (windowWidth < 1024) {
+    dialogWidth.value = "90%";
+  } else {
+    dialogWidth.value = "45%";
+  }
+};
 
 const GenerateNewData = () => {
   let newArray = Shuffle(outputCardData);
@@ -216,6 +274,7 @@ const Shuffle = (array: typeof cardData) => {
 };
 
 const ResetGame = () => {
+  dialogVisible.value = false;
   StopTimer();
   flipedData.splice(0);
   outputCardData.forEach((element) => {
@@ -234,6 +293,7 @@ const StartGame = () => {
 
 const GameOver = () => {
   StopTimer();
+  dialogVisible.value = true;
 };
 
 const GetFlipData = (id: number) => {
@@ -256,6 +316,10 @@ const StartTimer = () => {
 
 const StopTimer = () => {
   clearInterval(timer);
+};
+
+const handleClose = () => {
+  dialogVisible.value = false;
 };
 </script>
 
@@ -308,11 +372,10 @@ const StopTimer = () => {
       }
     }
     .cardarea {
-      width: 500px;
+      width: 100%;
       height: 100%;
       @extend %flex_center;
       flex-wrap: wrap;
-      padding: 10px;
       position: relative;
       .cover {
         position: absolute;
@@ -324,6 +387,7 @@ const StopTimer = () => {
         @extend %flex_center;
         background-color: #202020e5;
         visibility: hidden;
+        border-radius: 10px;
         .text {
           width: 120px;
           height: 40px;
@@ -341,6 +405,59 @@ const StopTimer = () => {
 
       .active {
         visibility: visible;
+      }
+
+      .cardwrapper {
+        width: 500px;
+        height: 100%;
+        @extend %flex_center;
+        flex-wrap: wrap;
+        padding: 10px;
+      }
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  @extend %flex_center;
+  flex-wrap: wrap;
+  .textbox {
+    width: 100%;
+    height: 35px;
+    @extend %flex_center;
+    .gameover_text {
+      @include font_set(#dcdcdc, 22px, 500);
+      text-align: center;
+      height: 35px;
+      line-height: 35px;
+      &::v-deep .time_text {
+        @include font_set(#ffee00d2, 28px, 600);
+        line-height: 35px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    .textbox {
+      .gameover_text {
+        @include font_set(#dcdcdc, 18px, 500);
+        &::v-deep .time_text {
+          @include font_set(#ffee00d2, 24px, 600);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .container {
+    .gamearea {
+      .info__box {
+        margin: 20px 0 16px;
       }
     }
   }
