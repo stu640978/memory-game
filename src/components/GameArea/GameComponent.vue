@@ -441,7 +441,7 @@ const handleClose = () => {
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1200px) {
   .content {
     .textbox {
       .gameover_text {
