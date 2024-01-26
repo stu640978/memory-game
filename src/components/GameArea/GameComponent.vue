@@ -415,7 +415,7 @@ const handleClose = () => {
         height: 100%;
         @extend %flex_center;
         flex-wrap: wrap;
-        padding: 10px;
+        padding: 0 10px;
       }
     }
   }
@@ -444,6 +444,13 @@ const handleClose = () => {
 }
 
 @media screen and (max-width: 1200px) {
+  .container {
+    .gamearea {
+      .info__box {
+        margin: 20px 0 12px;
+      }
+    }
+  }
   .content {
     .textbox {
       .gameover_text {
@@ -460,7 +467,7 @@ const handleClose = () => {
   .container {
     .gamearea {
       .info__box {
-        margin: 20px 0 16px;
+        margin: 10px 0 10px;
       }
     }
   }

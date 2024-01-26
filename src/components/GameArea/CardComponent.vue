@@ -140,8 +140,8 @@ const FlipCard = () => {
 
 @media screen and (max-width: 400px) {
   .card_container {
-    height: 90px;
-    width: 70px;
+    height: 80px;
+    width: 60px;
     margin: 5px;
   }
 }
