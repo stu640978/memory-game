@@ -2,7 +2,9 @@
   <div class="container">
     <div class="gamearea">
       <div class="info__box">
-        <div class="timer"></div>
+        <div class="timer">
+          <span class="timer__text">{{ timerText }}</span>
+        </div>
         <div class="reset__btn" @click="ResetGame">重新遊戲</div>
       </div>
       <div class="cardarea">
@@ -22,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, onUnmounted } from "vue";
 import CardComponent from "@/components/GameArea/CardComponent.vue";
 
 const coverActive = ref(true);
@@ -153,8 +155,19 @@ const outputCardData = reactive([...cardData]);
 
 const ignoreClick = ref(false);
 
+const timerText = ref(0);
+
+let timer: ReturnType<typeof setInterval>;
+
 watch(flipedData, (newVal) => {
+  // 當翻轉的卡片數量為 2 時，判斷是否為相同數字
   if (newVal.length === 2) {
+    // 判斷是否所有卡片都已經翻轉，若是則遊戲結束
+    if (outputCardData.every((element) => element.isFlipped === true)) {
+      GameOver();
+      return;
+    }
+
     ignoreClick.value = true;
     setTimeout(() => {
       if (newVal[0].number !== newVal[1].number) {
@@ -174,10 +187,15 @@ watch(flipedData, (newVal) => {
       flipedData.splice(0);
     }, 1000);
 
+    // 必須要等到卡片翻轉完畢才能再次點擊
     setTimeout(() => {
       ignoreClick.value = false;
-    }, 1100);
+    }, 1000);
   }
+});
+
+onUnmounted(() => {
+  StopTimer();
 });
 
 const GenerateNewData = () => {
@@ -198,16 +216,24 @@ const Shuffle = (array: typeof cardData) => {
 };
 
 const ResetGame = () => {
+  StopTimer();
+  flipedData.splice(0);
   outputCardData.forEach((element) => {
     element.isFlipped = false;
     element.isMatched = false;
   });
   coverActive.value = true;
+  timerText.value = 0;
 };
 
 const StartGame = () => {
   GenerateNewData();
+  StartTimer();
   coverActive.value = false;
+};
+
+const GameOver = () => {
+  StopTimer();
 };
 
 const GetFlipData = (id: number) => {
@@ -220,6 +246,16 @@ const GetFlipData = (id: number) => {
       });
     }
   });
+};
+
+const StartTimer = () => {
+  timer = setInterval(() => {
+    timerText.value++;
+  }, 1000);
+};
+
+const StopTimer = () => {
+  clearInterval(timer);
 };
 </script>
 
@@ -249,6 +285,10 @@ const GetFlipData = (id: number) => {
         height: 70px;
         border-radius: 50%;
         background-color: #202020;
+        @extend %flex_center;
+        .timer__text {
+          @include font_set(#ececec, 24px, 600);
+        }
       }
       .reset__btn {
         position: absolute;
