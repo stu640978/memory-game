@@ -25,4 +25,11 @@ nav {
     }
   }
 }
+
+.el-dialog {
+  background-color: rgba(51, 41, 65, 0.8) !important;
+  .el-dialog__title {
+    color: #dcdcdc;
+  }
+}
 </style>

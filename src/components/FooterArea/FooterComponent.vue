@@ -52,7 +52,7 @@
           position: absolute;
           left: -8%;
           top: 38%;
-          background: rgba(0, 196, 179, 0.3);
+          background: rgba(134, 74, 249, 0.3);
         }
       }
     }

@@ -1,15 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Noto+Serif+TC&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Noto+Serif+TC&display=swap");
 
 $default_font_color: #fff;
 $default_font_size: 14px;
 $default_font_weight: 400;
-$default_font_family: 'Noto Sans TC',
-微軟正黑體,
-儷黑 Pro,
-文泉驛正黑,
-'Noto Serif';
-$primary_background_color: #333;
+$default_font_family: "Noto Sans TC", 微軟正黑體, 儷黑 Pro, 文泉驛正黑,
+  "Noto Serif";
+$primary_background_color: rgba(51, 41, 65, 0.5);
 
 // 隱藏scrollbar
 %hide_scrollbar {
@@ -30,10 +27,12 @@ $primary_background_color: #333;
   align-items: center;
 }
 
-@mixin font_set($color: $default_font_color,
+@mixin font_set(
+  $color: $default_font_color,
   $font_size: $default_font_size,
   $font_weight: $default_font_weight,
-  $font_family: $default_font_family) {
+  $font_family: $default_font_family
+) {
   color: $color;
   font-size: $font_size;
   font-weight: $font_weight;

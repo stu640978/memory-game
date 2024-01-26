@@ -27,7 +27,7 @@
     v-model="dialogVisible"
     title="遊戲結束!"
     :width="dialogWidth"
-    class="tips_dialog"
+    class="gameover_dialog"
     :before-close="handleClose"
   >
     <div class="content">
@@ -341,7 +341,7 @@ const handleClose = () => {
       width: 100%;
       height: 50px;
       @extend %flex_center;
-      background-color: #4d4d4dd4;
+      background-color: rgba(51, 41, 65, 0.8);
       border-radius: 12px;
       position: relative;
       .timer {
@@ -361,7 +361,7 @@ const handleClose = () => {
         width: 80px;
         height: 30px;
         border-radius: 12px;
-        background-color: #ffee00d2;
+        background-color: rgb(248, 229, 89);
         @include font_set(#202020, 16px, 600);
         line-height: 30px;
         cursor: pointer;
@@ -386,14 +386,14 @@ const handleClose = () => {
         height: 100%;
         z-index: 10;
         @extend %flex_center;
-        background-color: #202020e5;
+        background-color: rgba(51, 41, 65, 0.8);
         visibility: hidden;
         border-radius: 10px;
         .text {
           width: 120px;
           height: 40px;
           border-radius: 16px;
-          background-color: #ffee00d2;
+          background-color: rgb(248, 229, 89);
           @include font_set(#202020, 24px, 600);
           line-height: 40px;
           cursor: pointer;
@@ -433,8 +433,8 @@ const handleClose = () => {
       text-align: center;
       height: 35px;
       line-height: 35px;
-      &::v-deep .time_text {
-        @include font_set(#ffee00d2, 28px, 600);
+      &:deep(.time_text) {
+        @include font_set(rgb(248, 229, 89), 28px, 600);
         line-height: 35px;
       }
     }
@@ -446,8 +446,8 @@ const handleClose = () => {
     .textbox {
       .gameover_text {
         @include font_set(#dcdcdc, 18px, 500);
-        &::v-deep .time_text {
-          @include font_set(#ffee00d2, 24px, 600);
+        &:deep(.time_text) {
+          @include font_set(rgb(248, 229, 89), 24px, 600);
         }
       }
     }

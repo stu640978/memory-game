@@ -82,7 +82,7 @@ const GetLatestWidthAndResizeDialog = () => {
   height: 64px;
   width: 100%;
   @extend %flex_center;
-  background-color: rgba(128, 0, 128, 0.5);
+  background-color: rgb(134, 74, 249, 0.4);
   position: relative;
   .title {
     @include font_set(#ececec, 24px, 600);
@@ -98,10 +98,10 @@ const GetLatestWidthAndResizeDialog = () => {
     .help {
       width: 40px;
       height: 40px;
-      border: 4px solid rgb(120, 0, 120);
+      border: 4px solid rgb(52, 46, 120);
       border-radius: 50%;
       @include font_set(#ececec, 18px, 600);
-      background-color: rgb(216, 0, 216);
+      background-color: rgb(59, 52, 134);
       line-height: 32px;
       cursor: pointer;
       transition: all 0.1s;

@@ -105,7 +105,7 @@ const FlipCard = () => {
   }
 
   .card__back {
-    background-color: #202020;
+    background-color: rgba(51, 41, 65, 0.8);
     border-radius: 5px;
     cursor: pointer;
     transform: rotateY(0deg);
