@@ -19,4 +19,22 @@ import FooterComponent from "@/components/FooterArea/FooterComponent.vue";
   display: flex;
   flex-wrap: wrap;
 }
+
+@media screen and (max-width: 3840px) {
+  .home {
+    zoom: 2;
+  }
+}
+
+@media screen and (max-width: 2560px) {
+  .home {
+    zoom: 1.5;
+  }
+}
+
+@media screen and (max-width: 1920px) {
+  .home {
+    zoom: 1;
+  }
+}
 </style>
