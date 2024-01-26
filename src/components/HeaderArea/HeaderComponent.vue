@@ -104,6 +104,7 @@ const GetLatestWidthAndResizeDialog = () => {
       background-color: rgb(216, 0, 216);
       line-height: 32px;
       cursor: pointer;
+      transition: all 0.1s;
 
       &:hover {
         scale: 1.1;

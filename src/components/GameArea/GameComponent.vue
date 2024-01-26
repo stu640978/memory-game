@@ -365,6 +365,7 @@ const handleClose = () => {
         @include font_set(#202020, 16px, 600);
         line-height: 30px;
         cursor: pointer;
+        transition: all 0.1s;
 
         &:hover {
           scale: 1.1;
