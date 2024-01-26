@@ -1,9 +1,12 @@
 <template>
   <div class="card_container" @click="FlipCard">
-    <div class="card__back" :class="[isFlipped === true ? 'flip' : null]"></div>
+    <div
+      class="card__back"
+      :class="[isFlipped === true ? 'flip' : 'noflip']"
+    ></div>
     <div
       class="card"
-      :class="[isFlipped === true ? 'flip' : null]"
+      :class="[isFlipped === true ? 'flip' : 'noflip']"
       :style="{ backgroundColor: color }"
     >
       <div class="card__box">
@@ -69,7 +72,6 @@ const FlipCard = () => {
   .card,
   .card__back {
     position: absolute;
-    position: absolute;
     width: 100%;
     height: 100%;
     transition: all 0.6s ease-in-out;
@@ -79,19 +81,13 @@ const FlipCard = () => {
     border-radius: 5px;
     transform: rotateY(-180deg);
     backface-visibility: hidden;
+    perspective: 1000px;
+    &.noflip {
+      animation: backTurn 0.6s forwards;
+    }
 
     &.flip {
       animation: faceTurn 0.6s forwards;
-      perspective: 1000px;
-      @keyframes faceTurn {
-        0% {
-          transform: rotateY(-180deg);
-        }
-
-        100% {
-          transform: rotateY(0deg);
-        }
-      }
     }
 
     .card__box {
@@ -114,19 +110,14 @@ const FlipCard = () => {
     cursor: pointer;
     transform: rotateY(0deg);
     backface-visibility: hidden;
+    perspective: 1000px;
+
+    &.noflip {
+      animation: faceTurn 0.6s forwards;
+    }
 
     &.flip {
       animation: backTurn 0.6s forwards;
-      perspective: 1000px;
-      @keyframes backTurn {
-        0% {
-          transform: rotateY(0deg);
-        }
-
-        100% {
-          transform: rotateY(180deg);
-        }
-      }
     }
   }
 }
@@ -136,6 +127,26 @@ const FlipCard = () => {
     height: 105px;
     width: 80px;
     margin: 5px;
+  }
+}
+
+@keyframes backTurn {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+@keyframes faceTurn {
+  0% {
+    transform: rotateY(-180deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);
   }
 }
 </style>

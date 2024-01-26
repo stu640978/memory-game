@@ -142,12 +142,12 @@ const cardData = reactive([
   },
 ]);
 
-interface flipedData {
+interface flipedDataInterface {
   id: number;
   number: number;
 }
 
-const flipedData: flipedData[] = reactive([]);
+const flipedData: flipedDataInterface[] = reactive([]);
 
 const outputCardData = reactive([...cardData]);
 
