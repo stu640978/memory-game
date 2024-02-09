@@ -443,11 +443,11 @@ const handleClose = () => {
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1300px) {
   .container {
     .gamearea {
       .info__box {
-        margin: 20px 0 12px;
+        margin: 10px 0 10px;
       }
     }
   }
